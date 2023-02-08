@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/consts/theme_data.dart';
 import 'package:grocery_app/provider/dark_theme_provider.dart';
 import 'package:grocery_app/screens/homepage.dart';
-// import 'package:grocery_app/services/dark_theme_prefs.dart';
 import 'package:provider/provider.dart';
+import 'consts/theme_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,21 +31,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    bool _isDark = false;
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) {
+        ChangeNotifierProvider(create: (BuildContext context) {
           return themeChangeProvider;
         })
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: Styles.themeData(_isDark, context),
-          home: Homepage(),
-        );
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: Styles.themeData(themeProvider.getDarkTheme, context),
+            home: Homepage());
       }),
     );
   }
