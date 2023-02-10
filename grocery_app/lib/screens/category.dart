@@ -45,12 +45,17 @@ List<Map<String, dynamic>> catInfo = [
     Color color = utils.color;
     return Scaffold(
       appBar: AppBar(
+        
+        elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: TextWidget(
-          text: "Categories",
-          color: color,
-          textSize: 24,
-          isTitle: true,
+        title: Padding(
+          padding: const EdgeInsets.only(top : 10.0,left: 6),
+          child: TextWidget(
+            text: "Categories",
+            color: color,
+            textSize: 26,
+            isTitle: true,
+          ),
         ),
       ),
       body: Padding(
