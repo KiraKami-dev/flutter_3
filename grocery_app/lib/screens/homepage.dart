@@ -12,21 +12,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    final themeState = Provider.of<DarkThemeProvider>(context);
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-          child: SwitchListTile(
-        title: Text('Theme'),
-        secondary: Icon(themeState.getDarkTheme
-            ? Icons.dark_mode_outlined
-            : Icons.light_mode_outlined),
-        onChanged: (bool value) {
-          setState(() {
-            themeState.setDarkTheme = value;
-          });
-        },
-        value: themeState.getDarkTheme,
-      )),
+        child: Text("HomeScreen"),
+      ),
     );
   }
 }
