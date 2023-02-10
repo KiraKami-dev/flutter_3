@@ -13,7 +13,8 @@ class User extends StatefulWidget {
 }
 
 class _UserState extends State<User> {
-  final TextEditingController _addressTextController =TextEditingController(text: "");
+  final TextEditingController _addressTextController =
+      TextEditingController(text: "");
   @override
   void dispose() {
     _addressTextController.dispose();
@@ -79,11 +80,14 @@ class _UserState extends State<User> {
                   height: 20,
                 ),
                 _listTiles(
-                    icon: IconlyBold.profile,
-                    titleText: "Address",
-                    subtitle: "yo",
-                    color: color,
-                    onPressed: ()  { _showAddressDialog();},),
+                  icon: IconlyBold.profile,
+                  titleText: "Address",
+                  subtitle: "yo",
+                  color: color,
+                  onPressed: () {
+                    _showAddressDialog();
+                  },
+                ),
                 _listTiles(
                     icon: IconlyBold.addUser,
                     titleText: "Orders",
@@ -123,10 +127,47 @@ class _UserState extends State<User> {
                   value: themeState.getDarkTheme,
                 ),
                 _listTiles(
-                    icon: IconlyBold.unlock,
-                    titleText: "Logout",
-                    color: color,
-                    onPressed: () {}),
+                  icon: IconlyBold.unlock,
+                  titleText: "Logout",
+                  color: color,
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Row(
+                            children: [
+                              Image.asset(
+                                "images/logout.png",
+                                height: 24,
+                                width: 24,
+                                alignment: AlignmentDirectional.center,
+                              ),
+                              const Text("Sign Out"),
+                            ],
+                          ),
+                          content: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text("are your sure?"),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "Ok",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -134,25 +175,29 @@ class _UserState extends State<User> {
       ),
     );
   }
-Future <void> _showAddressDialog() async {
-              await showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text("Enter Address"),
-                  content: TextField(
-                    onChanged: (value)async{
-                      print('_addressTextController.text ${_addressTextController.text}');
-                    },
-                    controller: _addressTextController,
-                    maxLines: 5,
-                    decoration: const InputDecoration(
-                        hintText: "Your address"),
-                  ),
-                  actions: [TextButton(onPressed: (){}, child: const Text("Update"))],
-                );
-              },);
-                    }
+
+  Future<void> _showAddressDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Enter Address"),
+          content: TextField(
+            onChanged: (value) async {
+              // ignore: avoid_print
+              print(
+                  '_addressTextController.text ${_addressTextController.text}');
+            },
+            controller: _addressTextController,
+            maxLines: 5,
+            decoration: const InputDecoration(hintText: "Your address"),
+          ),
+          actions: [TextButton(onPressed: () {}, child: const Text("Update"))],
+        );
+      },
+    );
+  }
+
   Widget _listTiles(
       {required IconData icon,
       required String titleText,
