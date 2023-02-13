@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/provider/dark_theme_provider.dart';
+import 'package:grocery_app/widgets/feed_item.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
@@ -27,81 +28,123 @@ class _HomepageState extends State<Homepage> {
     final themeState = utils.getTheme;
     Size size = Utils(context).getsize;
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: SizedBox(
-              height: size.height * 0.3,
-              child: Swiper(
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.asset(
-                    swipeimg[index],
-                    fit: BoxFit.fitHeight,
-                  );
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: SizedBox(
+                height: size.height * 0.3,
+                child: Swiper(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Image.asset(
+                      swipeimg[index],
+                      fit: BoxFit.fitHeight,
+                    );
+                  },
+                  itemCount: swipeimg.length,
+                  autoplay: true,
+                  pagination: const SwiperPagination(
+                    alignment: Alignment.bottomCenter,
+                    builder: DotSwiperPaginationBuilder(
+                      color: Colors.black,
+                      activeColor: Colors.blueAccent,
+                    ),
+                  ),
+                  // control: SwiperControl(),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 1,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: TextWidget(
+                text: "View all",
+                maxLines: 1,
+                color: Colors.blue,
+                textSize: 18,
+              ),
+            ),
+            Row(
+              children: [
+                RotatedBox(
+                  quarterTurns: -1,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: TextWidget(
+                          text: "On sale".toUpperCase(),
+                          color: Colors.red,
+                          textSize: 22,
+                          isTitle: true,
+                        ),
+                      ),
+                      const Icon(
+                        IconlyBold.discount,
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Flexible(
+                  child: SizedBox(
+                    height: size.height * 0.25,
+                    child: ListView.builder(
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return OnSaleWidget();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextWidget(
+                    text: "Our Product",
+                    maxLines: 1,
+                    color: color,
+                    textSize: 20,
+                    isTitle: true,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: TextWidget(
+                      text: "Browse all",
+                      maxLines: 1,
+                      color: Colors.blueAccent,
+                      textSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(0),
+              physics:const  NeverScrollableScrollPhysics(),
+              childAspectRatio: size.width / (size.height * 0.60),
+              children: List.generate(
+                4,
+                (index) {
+                  return const FeedWidget();
                 },
-                itemCount: swipeimg.length,
-                autoplay: true,
-                pagination: const SwiperPagination(
-                  alignment: Alignment.bottomCenter,
-                  builder: DotSwiperPaginationBuilder(
-                    color: Colors.black,
-                    activeColor: Colors.blueAccent,
-                  ),
-                ),
-                // control: SwiperControl(),
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 1,
-          ),
-          TextButton(
-            onPressed: () {},
-            child: TextWidget(
-              text: "View all",
-              maxLines: 1,
-              color: Colors.blue,
-              textSize: 18,
-            ),
-          ),
-          Row(
-            children: [
-              RotatedBox(
-                quarterTurns: -1,
-                child: Row(
-                  children: [
-                    TextWidget(
-                      text: "On sale".toUpperCase(),
-                      color: Colors.red,
-                      textSize: 22,
-                      isTitle: true,
-                    ),
-                    const Icon(
-                      IconlyBold.discount,
-                      color: Colors.red,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Flexible(
-                child: SizedBox(
-                  height: size.height * 0.25,
-                  child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return OnSaleWidget();
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

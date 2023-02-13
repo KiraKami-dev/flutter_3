@@ -34,9 +34,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (BuildContext context) {
-          return themeChangeProvider;
-        })
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return themeChangeProvider;
+          },
+        )
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {

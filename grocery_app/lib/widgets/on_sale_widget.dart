@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/widgets/price_widget.dart';
@@ -32,11 +33,11 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      "images/cat/kyoto.png",
+                    FancyShimmerImage(
+                      imageUrl: "https://i.imgur.com/EfkXGeg.png",
                       height: size.height * 0.14,
-                      // width: size.width * 0.12,
-                      fit: BoxFit.fill,
+                      width: size.width * 0.20,
+                      boxFit: BoxFit.fitWidth,
                     ),
                     Column(
                       children: [
@@ -71,7 +72,12 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     )
                   ],
                 ),
-                const PriceWidget(),
+                const PriceWidget(
+                  isOnSale: true,
+                      price: 5.9,
+                      salePrice: 2.9,
+                      textPrice: '2',
+                ),
                 const SizedBox(height: 5),
                 TextWidget(
                   text: 'Product title',
