@@ -1,7 +1,9 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/inner_screens/on_sale_screen.dart';
 import 'package:grocery_app/provider/dark_theme_provider.dart';
+import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/feed_item.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
@@ -27,6 +29,7 @@ class _HomepageState extends State<Homepage> {
     final Color color = Utils(context).color;
     final themeState = utils.getTheme;
     Size size = Utils(context).getsize;
+    
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -59,7 +62,9 @@ class _HomepageState extends State<Homepage> {
               height: 1,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethod.navigateTo(ctx : context, routeName :  OnSaleScreen.routeName);
+              },
               child: TextWidget(
                 text: "View all",
                 maxLines: 1,
@@ -134,7 +139,7 @@ class _HomepageState extends State<Homepage> {
               crossAxisCount: 2,
               shrinkWrap: true,
               padding: const EdgeInsets.all(0),
-              physics:const  NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: size.width / (size.height * 0.60),
               children: List.generate(
                 4,
