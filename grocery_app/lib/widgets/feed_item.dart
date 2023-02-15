@@ -112,9 +112,11 @@ class _FeedWidgetState extends State<FeedWidget> {
                               maxLines: 1,
                               enabled: true,
                               textAlign: TextAlign.center,
-                              onChanged: (valuee){
+                              onChanged: (valuee) {
                                 setState(() {
-                                  
+                                  if (valuee.isEmpty) {
+                                    // _quantityTextController.text = '1';//my changes
+                                  }
                                 });
                               },
                               inputFormatters: [
@@ -142,8 +144,8 @@ class _FeedWidgetState extends State<FeedWidget> {
                     textSize: 20,
                   ),
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Theme.of(context).cardColor),
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).cardColor),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         const RoundedRectangleBorder(

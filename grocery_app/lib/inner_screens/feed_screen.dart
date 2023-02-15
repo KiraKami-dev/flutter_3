@@ -56,7 +56,6 @@ class _FeedScreenState extends State<FeedScreen> {
               child: SizedBox(
                 height: kBottomNavigationBarHeight,
                 child: TextField(
-                  
                   controller: _searchController,
                   focusNode: _searchFocusNode,
                   onChanged: (valuee) {
