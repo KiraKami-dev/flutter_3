@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/inner_screens/product_details.dart';
+import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
@@ -33,7 +35,10 @@ class _CartWidgetState extends State<CartWidget> {
     Size size = Utils(context).getsize;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalMethod.navigateTo(
+            ctx: context, routeName: ProductDetails.routeName);
+      },
       child: Row(children: [
         Expanded(
             child: Padding(
@@ -72,7 +77,18 @@ class _CartWidgetState extends State<CartWidget> {
                       child: Row(
                         children: [
                           _quantity_Controller(
-                              fct: () {},
+                              fct: () {
+                                setState(() {
+                                  if (_quantityController.text == '1') {
+                                    return;
+                                  } else {
+                                    _quantityController.text =
+                                        (int.parse(_quantityController.text) -
+                                                1)
+                                            .toString();
+                                  }
+                                });
+                              },
                               color: Colors.red,
                               icon: CupertinoIcons.minus),
                           Flexible(
@@ -103,7 +119,13 @@ class _CartWidgetState extends State<CartWidget> {
                             ),
                           ),
                           _quantity_Controller(
-                              fct: () {},
+                              fct: () {
+                                setState(() {
+                                  _quantityController.text =
+                                      (int.parse(_quantityController.text) + 1)
+                                          .toString();
+                                });
+                              },
                               color: Colors.green,
                               icon: CupertinoIcons.add),
                         ],
@@ -131,7 +153,7 @@ class _CartWidgetState extends State<CartWidget> {
                         onTap: () {},
                         child: const Icon(
                           IconlyLight.heart,
-                          color: Colors.white,
+                          color: Colors.black,
                           size: 20,
                         ),
                       ),
@@ -143,7 +165,10 @@ class _CartWidgetState extends State<CartWidget> {
                       ),
                     ],
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
           ),
@@ -170,10 +195,11 @@ class _CartWidgetState extends State<CartWidget> {
               },
               borderRadius: BorderRadius.circular(12),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Icon(
                   icon,
                   color: Colors.white,
+                  size: 20,
                 ),
               )),
         ),

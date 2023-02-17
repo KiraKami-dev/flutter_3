@@ -5,6 +5,9 @@ import 'package:grocery_app/widgets/price_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
+import '../inner_screens/product_details.dart';
+import '../services/global_methods.dart';
+
 class OnSaleWidget extends StatefulWidget {
   const OnSaleWidget({Key? key}) : super(key: key);
 
@@ -24,7 +27,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () {},
+          onTap: () {
+            GlobalMethod.navigateTo(ctx: context, routeName: ProductDetails.routeName);
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
