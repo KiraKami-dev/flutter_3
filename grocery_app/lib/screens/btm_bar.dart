@@ -17,7 +17,7 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 3;
    final List<Map<String,dynamic>> _pages = [
       {'page': const Homepage(),'title': "HomePage"},
       {'page': Categories(),'title': "Category"},

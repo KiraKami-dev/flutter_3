@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/screens/wishlist/wishlist_screen.dart';
+import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -97,7 +99,12 @@ class _UserState extends State<User> {
                     icon: IconlyBold.bag,
                     titleText: "Wishlist",
                     color: color,
-                    onPressed: () {}),
+                    onPressed: () {
+                      GlobalMethod.navigateTo(
+                        ctx: context,
+                        routeName: WishListScreen.routeName,
+                      );
+                    }),
                 _listTiles(
                     icon: IconlyBold.heart,
                     titleText: "Viewed",
