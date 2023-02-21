@@ -4,6 +4,8 @@ import 'package:grocery_app/screens/cart/cart_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
+import '../../services/global_methods.dart';
+
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
 
@@ -24,7 +26,14 @@ class Cart extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethod.warningwDialog(
+                    title: "Empty Cart",
+                    subtitle: 'are you sure?',
+                    ftc: () {},
+                    context: context,
+                    imgadd: "images/logout.png");
+              },
               icon: Icon(
                 IconlyBroken.delete,
                 color: color,

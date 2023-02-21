@@ -23,6 +23,7 @@ class _UserState extends State<User> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     final Color color = themeState.getDarkTheme ? Colors.white : Colors.black;
@@ -94,7 +95,9 @@ class _UserState extends State<User> {
                     icon: IconlyBold.addUser,
                     titleText: "Orders",
                     color: color,
-                    onPressed: () {}),
+                    onPressed: () {
+                      
+                    }),
                 _listTiles(
                     icon: IconlyBold.bag,
                     titleText: "Wishlist",
@@ -137,42 +140,14 @@ class _UserState extends State<User> {
                   icon: IconlyBold.unlock,
                   titleText: "Logout",
                   color: color,
-                  onPressed: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Row(
-                            children: [
-                              Image.asset(
-                                "images/logout.png",
-                                height: 24,
-                                width: 24,
-                                alignment: AlignmentDirectional.center,
-                              ),
-                              const Text("Sign Out"),
-                            ],
-                          ),
-                          content: const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text("are your sure?"),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text("Cancel"),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "Ok",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    );
+                  onPressed: () {
+                    GlobalMethod.warningwDialog(
+                        title: "Sign out",
+                        subtitle: 'are you sure?',
+                        ftc: () {},
+                        context: context,
+                        imgadd: "images/logout.png"
+                        );                    
                   },
                 ),
               ],

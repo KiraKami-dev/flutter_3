@@ -7,6 +7,8 @@ import 'package:grocery_app/widgets/back_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
+import '../../services/global_methods.dart';
+
 class WishListScreen extends StatelessWidget {
   static const routeName = '/WislListScreen';
   const WishListScreen({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class WishListScreen extends StatelessWidget {
     Size size = Utils(context).getsize;
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
+            centerTitle: true,
             leading: const BackWidget(),
             automaticallyImplyLeading: false,
             elevation: 0,
@@ -31,7 +33,14 @@ class WishListScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  GlobalMethod.warningwDialog(
+                      title: "Empty Wishlist",
+                      subtitle: 'are you sure?',
+                      ftc: () {},
+                      context: context,
+                      imgadd: "images/logout.png");
+                },
                 icon: Icon(
                   IconlyBroken.delete,
                   color: color,
