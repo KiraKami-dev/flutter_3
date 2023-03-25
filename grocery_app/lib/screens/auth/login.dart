@@ -1,13 +1,15 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'package:grocery_app/screens/auth/register.dart';
+import 'package:grocery_app/services/global_methods.dart';
 import '../../consts/conts.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/google_button.dart';
 import '../../widgets/text_widget.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/LoginScreen';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -32,7 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
-      print('THe form is valid');
+      // ignore: avoid_print
+      print('The form is valid');
     }
   }
 
@@ -182,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 AuthButton(
-                  fct: () {},
+                  fct: () {
+                    _submitFormOnLogin;
+                  },
                   buttonText: 'Login',
                 ),
                 const SizedBox(
@@ -223,7 +228,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 AuthButton(
-                  fct: () {},
+                  fct: () {
+                    _submitFormOnLogin;
+                  },
                   buttonText: 'Continue as a guest',
                   primary: Colors.black,
                 ),
@@ -242,9 +249,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.lightBlue,
                               fontSize: 18,
                               fontWeight: FontWeight.w600),
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                           
-                          }),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              GlobalMethod.navigateTo(
+                                  ctx: context,
+                                  routeName: RegisterScreen.routeName);
+                            }),
                     ]))
               ],
             ),
