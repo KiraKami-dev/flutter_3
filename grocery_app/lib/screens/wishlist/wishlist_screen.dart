@@ -34,7 +34,7 @@ class WishListScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  GlobalMethod.warningwDialog(
+                  GlobalMethod.warningDialog(
                       title: "Empty Wishlist",
                       subtitle: 'are you sure?',
                       ftc: () {},

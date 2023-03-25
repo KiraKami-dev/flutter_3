@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/screens/orders/orders_screen.dart';
+import 'package:grocery_app/screens/view_recently/viewed_recently.dart';
 import 'package:grocery_app/screens/wishlist/wishlist_screen.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
@@ -114,7 +115,11 @@ class _UserState extends State<User> {
                     icon: IconlyBold.heart,
                     titleText: "Viewed",
                     color: color,
-                    onPressed: () {}),
+                    onPressed: () {
+                      GlobalMethod.navigateTo(
+                          ctx: context,
+                          routeName: ViewedRecentlyScreen.routeName);
+                    }),
                 _listTiles(
                     icon: IconlyBold.show,
                     titleText: "Forget Password",
@@ -143,7 +148,7 @@ class _UserState extends State<User> {
                   titleText: "Logout",
                   color: color,
                   onPressed: () {
-                    GlobalMethod.warningwDialog(
+                    GlobalMethod.warningDialog(
                         title: "Sign out",
                         subtitle: 'are you sure?',
                         ftc: () {},

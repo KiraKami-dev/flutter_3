@@ -10,7 +10,7 @@ class GlobalMethod {
     Navigator.pushNamed(ctx, routeName);
   }
 
-  static Future<void> warningwDialog({
+  static Future<void> warningDialog({
     required String title,
     required String subtitle,
     String? imgadd,

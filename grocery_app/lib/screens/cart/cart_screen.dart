@@ -27,7 +27,7 @@ class Cart extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                GlobalMethod.warningwDialog(
+                GlobalMethod.warningDialog(
                     title: "Empty Cart",
                     subtitle: 'are you sure?',
                     ftc: () {},
