@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/register.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import '../../consts/conts.dart';
@@ -169,7 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GlobalMethod.navigateTo(
+                          ctx: context,
+                          routeName: ForgetPasswordScreen.routeName);
+                    },
                     child: const Text(
                       'Forget password?',
                       maxLines: 1,
