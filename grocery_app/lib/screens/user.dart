@@ -58,6 +58,7 @@ class _UserState extends State<User> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
+                              // ignore: avoid_print
                               print('My name is pressed');
                             }),
                     ],
@@ -196,6 +197,7 @@ class _UserState extends State<User> {
       title: TextWidget(text: titleText, color: color, textSize: 22),
       // ignore: prefer_if_null_operators
       subtitle: TextWidget(
+          // ignore: prefer_if_null_operators
           text: subtitle == null ? "" : subtitle, color: color, textSize: 18),
       // subtitle: Text(),
       leading: Icon(icon),

@@ -23,7 +23,7 @@ class _FeedScreenState extends State<FeedScreen> {
     _searchFocusNode.dispose();
     super.dispose();
   }
-
+  @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getsize;

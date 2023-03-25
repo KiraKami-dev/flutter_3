@@ -13,7 +13,7 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
-    final theme = Utils(context).getTheme;
+    // final theme = Utils(context).getTheme;
     Size size = Utils(context).getsize;
     bool _isempty = true;
     if (_isempty == true) {
@@ -56,7 +56,7 @@ class Cart extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: ((context, index) {
-                  return CartWidget();
+                  return const CartWidget();
                 }),
               ),
             ),

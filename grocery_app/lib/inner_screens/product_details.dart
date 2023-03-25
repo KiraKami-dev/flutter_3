@@ -31,7 +31,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
-    final theme = Utils(context).getTheme;
+    // final theme = Utils(context).getTheme;
     Size size = Utils(context).getsize;
     return Scaffold(
       appBar: AppBar(
@@ -164,7 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: Colors.red,
                         icon: CupertinoIcons.minus,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Flexible(

@@ -2,7 +2,6 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
 import 'package:grocery_app/services/global_methods.dart';
-import 'package:provider/provider.dart';
 
 import '../../widgets/text_widget.dart';
 import '../../widgets/utils.dart';

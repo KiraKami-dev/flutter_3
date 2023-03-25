@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/inner_screens/feed_screen.dart';
 import 'package:grocery_app/inner_screens/on_sale_screen.dart';
-import 'package:grocery_app/provider/dark_theme_provider.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/feed_item.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
-import 'package:provider/provider.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -26,9 +24,9 @@ class _HomepageState extends State<Homepage> {
   ];
   @override
   Widget build(BuildContext context) {
-    final Utils utils = Utils(context);
+    // final Utils utils = Utils(context);
     final Color color = Utils(context).color;
-    final themeState = utils.getTheme;
+    // final themeState = utils.getTheme;
     Size size = Utils(context).getsize;
 
     return Scaffold(
@@ -106,7 +104,7 @@ class _HomepageState extends State<Homepage> {
                       itemCount: 10,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return OnSaleWidget();
+                        return const OnSaleWidget();
                       },
                     ),
                   ),

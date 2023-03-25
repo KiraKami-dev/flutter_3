@@ -3,6 +3,7 @@ import 'package:grocery_app/widgets/categories_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
+// ignore: must_be_immutable
 class Categories extends StatelessWidget {
    Categories({Key? key}) : super(key: key);
     List<Color> gridColors = [

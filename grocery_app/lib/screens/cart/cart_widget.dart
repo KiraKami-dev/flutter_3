@@ -28,10 +28,10 @@ class _CartWidgetState extends State<CartWidget> {
     _quantityController.text;
     super.dispose();
   }
-
+  @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
-    final theme = Utils(context).getTheme;
+    // final theme = Utils(context).getTheme;
     Size size = Utils(context).getsize;
 
     return GestureDetector(
@@ -76,7 +76,7 @@ class _CartWidgetState extends State<CartWidget> {
                       width: size.width * 0.3,
                       child: Row(
                         children: [
-                          _quantity_Controller(
+                          _quantitycontroller(
                               fct: () {
                                 setState(() {
                                   if (_quantityController.text == '1') {
@@ -118,7 +118,7 @@ class _CartWidgetState extends State<CartWidget> {
                               },
                             ),
                           ),
-                          _quantity_Controller(
+                          _quantitycontroller(
                               fct: () {
                                 setState(() {
                                   _quantityController.text =
@@ -177,7 +177,7 @@ class _CartWidgetState extends State<CartWidget> {
     );
   }
 
-  Widget _quantity_Controller({
+  Widget _quantitycontroller({
     required Function fct,
     required Color color,
     required IconData icon,

@@ -3,7 +3,6 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/screens/view_recently/viewed_widget.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
 import 'package:grocery_app/widgets/empty_screen.dart';
-import 'package:provider/provider.dart';
 
 import '../../services/global_methods.dart';
 import '../../widgets/text_widget.dart';

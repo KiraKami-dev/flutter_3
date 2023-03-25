@@ -17,6 +17,7 @@ class CategoriesWidgets extends StatelessWidget {
     double _screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
+        // ignore: avoid_print
         print("You tapped");
       },
       child: Container(
