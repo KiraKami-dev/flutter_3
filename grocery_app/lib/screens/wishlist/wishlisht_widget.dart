@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
 import 'package:grocery_app/services/global_methods.dart';
+import 'package:grocery_app/widgets/empty_screen.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
@@ -13,6 +14,14 @@ class WishlistWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getsize;
+    bool _isEmpty = true;
+    if (_isEmpty == true) {
+      return const EmptyScreen(
+          imagePath: "images/emptybox.png",
+          title: "View Product",
+          subtitle: "All your viewed products ",
+          buttonText: "View Product");
+    }
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: GestureDetector(

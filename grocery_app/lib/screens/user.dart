@@ -7,7 +7,6 @@ import 'package:grocery_app/screens/wishlist/wishlist_screen.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/dark_theme_provider.dart';
 
 class User extends StatefulWidget {
@@ -112,14 +111,15 @@ class _UserState extends State<User> {
                       );
                     }),
                 _listTiles(
-                    icon: IconlyBold.heart,
-                    titleText: "Viewed",
-                    color: color,
-                    onPressed: () {
-                      GlobalMethod.navigateTo(
-                          ctx: context,
-                          routeName: ViewedRecentlyScreen.routeName);
-                    }),
+                  icon: IconlyBold.heart,
+                  titleText: "Viewed",
+                  color: color,
+                  onPressed: () {
+                    GlobalMethod.navigateTo(
+                        ctx: context,
+                        routeName: ViewedRecentlyScreen.routeName);
+                  },
+                ),
                 _listTiles(
                     icon: IconlyBold.show,
                     titleText: "Forget Password",
