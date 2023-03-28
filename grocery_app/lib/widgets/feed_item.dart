@@ -9,7 +9,8 @@ import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 
 class FeedWidget extends StatefulWidget {
-  const FeedWidget({Key? key}) : super(key: key);
+  const FeedWidget({Key? key, required this.imgUrl, required this.title}) : super(key: key);
+  final String imgUrl, title;
 
   @override
   State<FeedWidget> createState() => _FeedWidgetState();
@@ -40,13 +41,14 @@ class _FeedWidgetState extends State<FeedWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            GlobalMethod.navigateTo(ctx: context, routeName: ProductDetails.routeName);
+            GlobalMethod.navigateTo(
+                ctx: context, routeName: ProductDetails.routeName);
           },
           borderRadius: BorderRadius.circular(12),
           child: Column(
             children: [
               FancyShimmerImage(
-                imageUrl: "https://i.imgur.com/EfkXGeg.png",
+                imageUrl: widget.imgUrl,
                 height: size.height * 0.12,
                 width: size.width * 0.14,
                 boxFit: BoxFit.contain,
@@ -56,15 +58,21 @@ class _FeedWidgetState extends State<FeedWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextWidget(
-                      text: "Tomato",
-                      color: color,
-                      textSize: 18,
-                      // isTitle: true,
+                    Flexible(
+                      flex: 3,
+                      child: TextWidget(
+                        text: widget.title,
+                        color: color,
+                        maxLines: 1,
+                        textSize: 18,
+                        // isTitle: true,
+                      ),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Icon(IconlyLight.heart),
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const Icon(IconlyLight.heart),
+                      ),
                     ),
                   ],
                 ),

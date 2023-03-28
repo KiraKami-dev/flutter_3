@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/consts/conts.dart';
 // import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
@@ -23,6 +24,7 @@ class _FeedScreenState extends State<FeedScreen> {
     _searchFocusNode.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
@@ -63,8 +65,8 @@ class _FeedScreenState extends State<FeedScreen> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            const BorderSide(color: Colors.greenAccent, width: 1),
+                        borderSide: const BorderSide(
+                            color: Colors.greenAccent, width: 1),
                       ),
                       hintText: "Search here",
                       prefixIcon: const Icon(Icons.search),
@@ -86,9 +88,12 @@ class _FeedScreenState extends State<FeedScreen> {
               physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: size.width / (size.height * 0.60),
               children: List.generate(
-                4,
+                Conts.productsList.length,
                 (index) {
-                  return const FeedWidget();
+                  return FeedWidget(
+                    imgUrl: Conts.productsList[index].id,
+                    title: Conts.productsList[index].title,
+                  );
                 },
               ),
             ),

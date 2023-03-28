@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/consts/conts.dart';
 import 'package:grocery_app/inner_screens/feed_screen.dart';
 import 'package:grocery_app/inner_screens/on_sale_screen.dart';
 import 'package:grocery_app/services/global_methods.dart';
@@ -147,9 +148,9 @@ class _HomepageState extends State<Homepage> {
               physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: size.width / (size.height * 0.60),
               children: List.generate(
-                4,
+                Conts.productsList.length < 4 ? Conts.productsList.length : 4,
                 (index) {
-                  return const FeedWidget();
+                  return FeedWidget(imgUrl: Conts.productsList[index].imageUrl,title: Conts.productsList[index].title,);
                 },
               ),
             )
