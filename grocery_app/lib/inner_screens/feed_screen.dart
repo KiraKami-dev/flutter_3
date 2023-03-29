@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/consts/conts.dart';
+import 'package:grocery_app/models/products_model.dart';
+import 'package:grocery_app/provider/products_provider.dart';
 // import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/feed_item.dart';
 
@@ -18,6 +21,7 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   final TextEditingController? _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+
   @override
   void dispose() {
     _searchController!.dispose();
@@ -29,6 +33,9 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getsize;
+    final productsProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allproduct = productsProviders.getProducts;
+
     return Scaffold(
       appBar: AppBar(
         leading: const BackWidget(),
@@ -88,12 +95,10 @@ class _FeedScreenState extends State<FeedScreen> {
               physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: size.width / (size.height * 0.60),
               children: List.generate(
-                Conts.productsList.length,
+                allproduct.length,
                 (index) {
-                  return FeedWidget(
-                    imgUrl: Conts.productsList[index].id,
-                    title: Conts.productsList[index].title,
-                  );
+                  return ChangeNotifierProvider.value(
+                      value: allproduct[index], child: const FeedWidget());
                 },
               ),
             ),

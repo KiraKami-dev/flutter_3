@@ -7,10 +7,13 @@ import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/price_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../models/products_model.dart';
+import '../provider/products_provider.dart';
 
 class FeedWidget extends StatefulWidget {
-  const FeedWidget({Key? key, required this.imgUrl, required this.title}) : super(key: key);
-  final String imgUrl, title;
+  const FeedWidget({Key? key}) : super(key: key);
 
   @override
   State<FeedWidget> createState() => _FeedWidgetState();
@@ -34,6 +37,7 @@ class _FeedWidgetState extends State<FeedWidget> {
   Widget build(BuildContext context) {
     Size size = Utils(context).getsize;
     final Color color = Utils(context).color;
+    final productsProviders = Provider.of<ProductModel>(context);    
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Material(
@@ -48,7 +52,7 @@ class _FeedWidgetState extends State<FeedWidget> {
           child: Column(
             children: [
               FancyShimmerImage(
-                imageUrl: widget.imgUrl,
+                imageUrl: productsProviders.imageUrl,
                 height: size.height * 0.12,
                 width: size.width * 0.14,
                 boxFit: BoxFit.contain,
@@ -61,7 +65,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                     Flexible(
                       flex: 3,
                       child: TextWidget(
-                        text: widget.title,
+                        text: productsProviders.title,
                         color: color,
                         maxLines: 1,
                         textSize: 18,
@@ -86,8 +90,8 @@ class _FeedWidgetState extends State<FeedWidget> {
                       flex: 2,
                       child: PriceWidget(
                         isOnSale: true,
-                        price: 5.9,
-                        salePrice: 2.9,
+                        price: productsProviders.price,
+                        salePrice: productsProviders.salePrice,
                         textPrice: _quantityTextController.text,
                       ),
                     ),
@@ -99,10 +103,10 @@ class _FeedWidgetState extends State<FeedWidget> {
                       child: Row(
                         children: [
                           Flexible(
-                            flex: 1,
+                            flex: 4,
                             child: FittedBox(
                               child: TextWidget(
-                                text: "KG",
+                                text: productsProviders.isPiece ? "Piece":"KG",
                                 color: color,
                                 textSize: 18,
                                 isTitle: true,

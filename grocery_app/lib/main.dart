@@ -3,6 +3,7 @@ import 'package:grocery_app/inner_screens/feed_screen.dart';
 import 'package:grocery_app/inner_screens/on_sale_screen.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
 import 'package:grocery_app/provider/dark_theme_provider.dart';
+import 'package:grocery_app/provider/products_provider.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/login.dart';
 import 'package:grocery_app/screens/auth/register.dart';
@@ -46,7 +47,8 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) {
             return themeChangeProvider;
           },
-        )
+        ),
+        ChangeNotifierProvider(create: (_) => ProductsProvider()),
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
@@ -57,14 +59,16 @@ class _MyAppState extends State<MyApp> {
           home: const BottomBar(),
           routes: {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
-            FeedScreen.routeName:(ctx)=> const FeedScreen(),
-            ProductDetails.routeName:(ctx)=> const ProductDetails(),
-            WishListScreen.routeName:(ctx)=> const WishListScreen(),
-            OrdersScreen.routeName : (ctx)=> const OrdersScreen(),
-            ViewedRecentlyScreen.routeName:(ctx)=> const ViewedRecentlyScreen(),
-            LoginScreen.routeName:(ctx)=> const LoginScreen(),
-            RegisterScreen.routeName:(ctx)=> const RegisterScreen(),
-            ForgetPasswordScreen.routeName:(ctx)=> const ForgetPasswordScreen(),
+            FeedScreen.routeName: (ctx) => const FeedScreen(),
+            ProductDetails.routeName: (ctx) => const ProductDetails(),
+            WishListScreen.routeName: (ctx) => const WishListScreen(),
+            OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+            ViewedRecentlyScreen.routeName: (ctx) =>
+                const ViewedRecentlyScreen(),
+            LoginScreen.routeName: (ctx) => const LoginScreen(),
+            RegisterScreen.routeName: (ctx) => const RegisterScreen(),
+            ForgetPasswordScreen.routeName: (ctx) =>
+                const ForgetPasswordScreen(),
           },
         );
       }),

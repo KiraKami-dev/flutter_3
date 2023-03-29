@@ -9,6 +9,10 @@ import 'package:grocery_app/widgets/feed_item.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../models/products_model.dart';
+import '../provider/products_provider.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -29,6 +33,8 @@ class _HomepageState extends State<Homepage> {
     final Color color = Utils(context).color;
     // final themeState = utils.getTheme;
     Size size = Utils(context).getsize;
+    final productsProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allproduct = productsProviders.getProducts;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -148,12 +154,15 @@ class _HomepageState extends State<Homepage> {
               physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: size.width / (size.height * 0.60),
               children: List.generate(
-                Conts.productsList.length < 4 ? Conts.productsList.length : 4,
+                allproduct.length < 4 ? allproduct.length : 4,
                 (index) {
-                  return FeedWidget(imgUrl: Conts.productsList[index].imageUrl,title: Conts.productsList[index].title,);
+                  return ChangeNotifierProvider.value(
+                    value: allproduct[index],
+                    child: const FeedWidget(),
+                  );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
