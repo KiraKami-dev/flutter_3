@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/provider/products_provider.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -33,6 +35,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     final Color color = Utils(context).color;
     // final theme = Utils(context).getTheme;
     Size size = Utils(context).getsize;
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrentprod = productsProvider.findProdById(productId);
+    double usedPrice = getCurrentprod.isOnSale
+        ? getCurrentprod.salePrice
+        : getCurrentprod.price;
+    double totalPrice = usedPrice * int.parse(_quantityController.text);
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -53,7 +63,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Flexible(
             flex: 2,
             child: FancyShimmerImage(
-              imageUrl: "https://i.imgur.com/EfkXGeg.png",
+              imageUrl: getCurrentprod.imageUrl,
               // height: size.width,
               width: size.width,
               boxFit: BoxFit.scaleDown,
@@ -80,7 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         Flexible(
                           child: TextWidget(
-                            text: 'Title',
+                            text: getCurrentprod.title,
                             color: color,
                             textSize: 22,
                             isTitle: true,
@@ -101,12 +111,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     child: Row(children: [
                       TextWidget(
-                        text: "\$2.59",
+                        text: "\$${usedPrice.toStringAsFixed(2)}",
                         color: color,
                         textSize: 22,
                       ),
                       TextWidget(
-                        text: "/Kg",
+                        text: getCurrentprod.isPiece ? "/piece" : "/Kg",
                         color: color,
                         textSize: 12,
                         isTitle: false,
@@ -115,9 +125,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 10,
                       ),
                       Visibility(
-                        visible: true,
+                        visible: getCurrentprod.isOnSale ? true : false,
                         child: Text(
-                          '\$3.9',
+                          '\$${getCurrentprod.price.toStringAsFixed(2)}',
                           style: TextStyle(
                             fontSize: 15,
                             color: color,
@@ -200,10 +210,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       quantityController(
                           fct: () {
                             setState(() {
-                                  _quantityController.text =
-                                      (int.parse(_quantityController.text) + 1)
-                                          .toString();
-                                });
+                              _quantityController.text =
+                                  (int.parse(_quantityController.text) + 1)
+                                      .toString();
+                            });
                           },
                           color: Colors.green,
                           icon: CupertinoIcons.add),
@@ -245,7 +255,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   FittedBox(
                                     child: Row(children: [
                                       TextWidget(
-                                        text: '\$2.59/',
+                                        text: '\$${totalPrice.toStringAsFixed(2)}/',
                                         color: color,
                                         textSize: 20,
                                         isTitle: true,

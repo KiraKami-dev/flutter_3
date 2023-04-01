@@ -3,6 +3,10 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../models/products_model.dart';
+import '../provider/products_provider.dart';
 
 class OnSaleScreen extends StatelessWidget {
   static const routeName = "/OnSaleScrenn";
@@ -13,6 +17,8 @@ class OnSaleScreen extends StatelessWidget {
     final Color color = Utils(context).color;
     Size size = Utils(context).getsize;
     bool isEmpty = false;
+    final productsProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> productOnSale = productsProviders.getOnSaleProduct;
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -34,23 +40,25 @@ class OnSaleScreen extends StatelessWidget {
           isTitle: true,
         ),
       ),
-      body: isEmpty
+      body: productOnSale.isEmpty
           // ignore: dead_code
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Column(
                   children: [
-                    Image.asset("images/emptybox.png",
-                    height: 244,
-                    width: 244,),
+                    Image.asset(
+                      "images/emptybox.png",
+                      height: 244,
+                      width: 244,
+                    ),
                     Text(
                       "No product for sale \n Stay tuned!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                      color: color,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w300,
+                        color: color,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
@@ -64,9 +72,12 @@ class OnSaleScreen extends StatelessWidget {
               // physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: size.width / (size.height * 0.60),
               children: List.generate(
-                4,
+                productOnSale.length,
                 (index) {
-                  return const OnSaleWidget();
+                  return ChangeNotifierProvider.value(
+                    value: productOnSale[index],
+                    child: const OnSaleWidget(),
+                  );
                 },
               ),
             ),

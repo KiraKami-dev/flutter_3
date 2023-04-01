@@ -37,7 +37,8 @@ class _FeedWidgetState extends State<FeedWidget> {
   Widget build(BuildContext context) {
     Size size = Utils(context).getsize;
     final Color color = Utils(context).color;
-    final productsProviders = Provider.of<ProductModel>(context);    
+    final productsProviders = Provider.of<ProductModel>(context);
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Material(
@@ -45,8 +46,9 @@ class _FeedWidgetState extends State<FeedWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            GlobalMethod.navigateTo(
-                ctx: context, routeName: ProductDetails.routeName);
+            Navigator.pushNamed(context, ProductDetails.routeName,arguments: productsProviders.id);
+            // GlobalMethod.navigateTo(
+            //     ctx: context, routeName: ProductDetails.routeName);
           },
           borderRadius: BorderRadius.circular(12),
           child: Column(
@@ -89,7 +91,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                     Flexible(
                       flex: 2,
                       child: PriceWidget(
-                        isOnSale: true,
+                        isOnSale: productsProviders.isOnSale,
                         price: productsProviders.price,
                         salePrice: productsProviders.salePrice,
                         textPrice: _quantityTextController.text,
@@ -106,7 +108,8 @@ class _FeedWidgetState extends State<FeedWidget> {
                             flex: 4,
                             child: FittedBox(
                               child: TextWidget(
-                                text: productsProviders.isPiece ? "Piece":"KG",
+                                text:
+                                    productsProviders.isPiece ? "Piece" : "KG",
                                 color: color,
                                 textSize: 18,
                                 isTitle: true,

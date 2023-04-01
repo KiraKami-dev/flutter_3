@@ -35,6 +35,7 @@ class _HomepageState extends State<Homepage> {
     Size size = Utils(context).getsize;
     final productsProviders = Provider.of<ProductsProvider>(context);
     List<ProductModel> allproduct = productsProviders.getProducts;
+    List<ProductModel> onSaleProduct = productsProviders.getOnSaleProduct;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -108,10 +109,13 @@ class _HomepageState extends State<Homepage> {
                   child: SizedBox(
                     height: size.height * 0.25,
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: onSaleProduct.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return const OnSaleWidget();
+                        return ChangeNotifierProvider.value(
+                          value: onSaleProduct[index],
+                          child: const OnSaleWidget(),
+                        );
                       },
                     ),
                   ),
