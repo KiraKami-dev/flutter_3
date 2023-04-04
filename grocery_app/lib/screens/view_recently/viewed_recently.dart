@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/provider/viewed_prod_provider.dart';
 import 'package:grocery_app/screens/view_recently/viewed_widget.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
 import 'package:grocery_app/widgets/empty_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../services/global_methods.dart';
 import '../../widgets/text_widget.dart';
@@ -22,14 +24,19 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
   @override
   Widget build(BuildContext context) {
     Color color = Utils(context).color;
+    final viewedlistProvider = Provider.of<ViewedProdProvider>(context);
+    final viewedlistItemsList = viewedlistProvider.getViewedProdlistItems.values
+        .toList()
+        .reversed
+        .toList();
     // Size size = Utils(context).getScreenSize;
-    bool _isEmpty = true;
-    if (_isEmpty == true) {
+    if (viewedlistItemsList.isEmpty) {
       return const EmptyScreen(
-          imagePath: "images/emptybox.png",
-          title: "No viewed Product",
-          subtitle: "Check View product here",
-          buttonText: "View products");
+        imagePath: "images/emptybox.png",
+        title: "No viewed Product",
+        subtitle: "Check View product here",
+        buttonText: "View products",
+      );
     } else {
       return Scaffold(
         appBar: AppBar(
@@ -61,11 +68,13 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
               Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
         ),
         body: ListView.builder(
-            itemCount: 10,
+            itemCount: viewedlistItemsList.length,
             itemBuilder: (ctx, index) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
-                child: ViewedRecentlyWidget(),
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+                child: ChangeNotifierProvider.value(
+                    value: viewedlistItemsList[index],
+                    child: ViewedRecentlyWidget()),
               );
             }),
       );
