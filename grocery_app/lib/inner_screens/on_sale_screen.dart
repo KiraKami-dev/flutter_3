@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/widgets/empty_prod.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../models/products_model.dart';
+import '../provider/cart_provider.dart';
 import '../provider/products_provider.dart';
 
 class OnSaleScreen extends StatelessWidget {
@@ -16,9 +18,12 @@ class OnSaleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getsize;
-    bool isEmpty = false;
     final productsProviders = Provider.of<ProductsProvider>(context);
     List<ProductModel> productOnSale = productsProviders.getOnSaleProduct;
+    final productsModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart = cartProvider.getCardItems.containsKey(productsModel.id);
+        
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -42,29 +47,7 @@ class OnSaleScreen extends StatelessWidget {
       ),
       body: productOnSale.isEmpty
           // ignore: dead_code
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Column(
-                  children: [
-                    Image.asset(
-                      "images/emptybox.png",
-                      height: 244,
-                      width: 244,
-                    ),
-                    Text(
-                      "No product for sale \n Stay tuned!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
+          ? const EmptyProductWidget(text: "No Product on Sale",)
           : GridView.count(
               crossAxisCount: 2,
               // shrinkWrap: true,

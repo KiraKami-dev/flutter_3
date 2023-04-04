@@ -17,27 +17,27 @@ class Categories extends StatelessWidget {
 List<Map<String, dynamic>> catInfo = [
     {
       'imgpath': "images/cat/cabbage.png",
-      'cattext': "Cabbage",
+      'cattext': "Fruits",
     },
     {
       'imgpath': "images/cat/kyoto.png",
-      'cattext': "Kyoto",
+      'cattext': "Vegetables",
     },
     {
       'imgpath': "images/cat/onion.png",
-      'cattext': "onion",
+      'cattext': "Herbs",
     },
     {
       'imgpath': "images/cat/spinach.png",
-      'cattext': "Spinach",
+      'cattext': "Nuts",
     },
     {
       'imgpath': "images/cat/tomato.png",
-      'cattext': "tomato",
+      'cattext': "Spices",
     },
     {
       'imgpath': "images/cat/strawberry.png",
-      'cattext': "strawberry",
+      'cattext': "Grains",
     },
   ];
   @override

@@ -3,10 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/provider/cart_provider.dart';
 import 'package:grocery_app/provider/products_provider.dart';
+import 'package:grocery_app/widgets/heat_btm.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 import 'package:provider/provider.dart';
+
+import '../models/products_model.dart';
+import '../provider/wishlist_provider.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -36,12 +41,16 @@ class _ProductDetailsState extends State<ProductDetails> {
     // final theme = Utils(context).getTheme;
     Size size = Utils(context).getsize;
     final productsProvider = Provider.of<ProductsProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final getCurrentprod = productsProvider.findProdById(productId);
     double usedPrice = getCurrentprod.isOnSale
         ? getCurrentprod.salePrice
         : getCurrentprod.price;
     double totalPrice = usedPrice * int.parse(_quantityController.text);
+    bool? _isInCart = cartProvider.getCardItems.containsKey(getCurrentprod.id);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(getCurrentprod.id);
 
     return Scaffold(
       appBar: AppBar(
@@ -98,7 +107,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         IconButton(
                           onPressed: () {},
-                          icon: const Icon(IconlyLight.heart),
+                          icon: HeartBtn(
+                            productId: getCurrentprod.id,
+                          isInWishlist: _isInWishlist,
+                          ),
                         )
                       ],
                     ),
@@ -255,7 +267,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   FittedBox(
                                     child: Row(children: [
                                       TextWidget(
-                                        text: '\$${totalPrice.toStringAsFixed(2)}/',
+                                        text:
+                                            '\$${totalPrice.toStringAsFixed(2)}/',
                                         color: color,
                                         textSize: 20,
                                         isTitle: true,
@@ -281,12 +294,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: () {},
+                              onTap: _isInCart
+                                  ? null
+                                  : () {
+                                      cartProvider.addProductToCart(
+                                          productId: getCurrentprod.id,
+                                          quantity: int.parse(
+                                              _quantityController.text));
+                                    },
                               borderRadius: BorderRadius.circular(10),
                               child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: TextWidget(
-                                      text: 'Add to cart',
+                                      text: _isInCart ? "In Cart" : 'Add to cart',
                                       color: Colors.white,
                                       textSize: 18)),
                             ),

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/inner_screens/cat_screen.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/dark_theme_provider.dart';
 
 class CategoriesWidgets extends StatelessWidget {
-  const CategoriesWidgets(
-      {Key? key,required this.catText,required this.imgPath,required this.passedColor,})
-      : super(key: key);
+  const CategoriesWidgets({
+    Key? key,
+    required this.catText,
+    required this.imgPath,
+    required this.passedColor,
+  }) : super(key: key);
   final String catText, imgPath;
   final Color passedColor;
   @override
@@ -18,7 +22,9 @@ class CategoriesWidgets extends StatelessWidget {
     return InkWell(
       onTap: () {
         // ignore: avoid_print
-        print("You tapped");
+        // print("You tapped");
+        Navigator.pushNamed(context, CategoryScreen.routeName,
+            arguments: catText);
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,4 +1,3 @@
-
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,12 +37,19 @@ class GlobalMethod {
           ),
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+              },
               child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 ftc();
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
               },
               child: const Text(
                 "Ok",

@@ -4,13 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
+import 'package:grocery_app/models/cart_model.dart';
+import 'package:grocery_app/provider/products_provider.dart';
 import 'package:grocery_app/services/global_methods.dart';
+import 'package:grocery_app/widgets/heat_btm.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/cart_provider.dart';
+import '../../provider/wishlist_provider.dart';
 
 class CartWidget extends StatefulWidget {
-  const CartWidget({Key? key}) : super(key: key);
-
+  const CartWidget({Key? key, required this.q}) : super(key: key);
+  final int q;
   @override
   State<CartWidget> createState() => _CartWidgetState();
 }
@@ -19,7 +26,7 @@ class _CartWidgetState extends State<CartWidget> {
   final TextEditingController _quantityController = TextEditingController();
   @override
   void initState() {
-    _quantityController.text = '1';
+    _quantityController.text = widget.q.toString();
     super.initState();
   }
 
@@ -28,16 +35,28 @@ class _CartWidgetState extends State<CartWidget> {
     _quantityController.text;
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     // final theme = Utils(context).getTheme;
     Size size = Utils(context).getsize;
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    final cartModel = Provider.of<CartModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+    final getCurrentprod = productsProvider.findProdById(cartModel.productId);
+    double usedPrice = getCurrentprod.isOnSale
+        ? getCurrentprod.salePrice
+        : getCurrentprod.price;
+    double totalPrice = usedPrice * int.parse(_quantityController.text);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(getCurrentprod.id);
 
     return GestureDetector(
       onTap: () {
-        GlobalMethod.navigateTo(
-            ctx: context, routeName: ProductDetails.routeName);
+        Navigator.pushNamed(context, ProductDetails.routeName,
+            arguments: cartModel.productId);
       },
       child: Row(children: [
         Expanded(
@@ -57,7 +76,7 @@ class _CartWidgetState extends State<CartWidget> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: FancyShimmerImage(
-                    imageUrl: "https://i.imgur.com/EfkXGeg.png",
+                    imageUrl: getCurrentprod.imageUrl,
                     boxFit: BoxFit.fill,
                   ),
                 ),
@@ -65,7 +84,7 @@ class _CartWidgetState extends State<CartWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWidget(
-                      text: "Title",
+                      text: getCurrentprod.title,
                       color: color,
                       textSize: 18,
                     ),
@@ -78,16 +97,18 @@ class _CartWidgetState extends State<CartWidget> {
                         children: [
                           _quantitycontroller(
                               fct: () {
-                                setState(() {
-                                  if (_quantityController.text == '1') {
-                                    return;
-                                  } else {
+                                if (_quantityController.text == '1') {
+                                  return;
+                                } else {
+                                  cartProvider
+                                      .reduceQuantityByOne(cartModel.productId);
+                                  setState(() {
                                     _quantityController.text =
                                         (int.parse(_quantityController.text) -
                                                 1)
                                             .toString();
-                                  }
-                                });
+                                  });
+                                }
                               },
                               color: Colors.red,
                               icon: CupertinoIcons.minus),
@@ -120,6 +141,8 @@ class _CartWidgetState extends State<CartWidget> {
                           ),
                           _quantitycontroller(
                               fct: () {
+                                cartProvider
+                                    .increaseQuantityByOne(cartModel.productId);
                                 setState(() {
                                   _quantityController.text =
                                       (int.parse(_quantityController.text) + 1)
@@ -139,7 +162,9 @@ class _CartWidgetState extends State<CartWidget> {
                   child: Column(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          cartProvider.removeOneItem(cartModel.productId);
+                        },
                         child: const Icon(
                           CupertinoIcons.cart_badge_minus,
                           color: Colors.red,
@@ -151,14 +176,12 @@ class _CartWidgetState extends State<CartWidget> {
                       ),
                       InkWell(
                         onTap: () {},
-                        child: const Icon(
-                          IconlyLight.heart,
-                          color: Colors.black,
-                          size: 20,
-                        ),
+                        child: HeartBtn(
+                            productId: getCurrentprod.id,
+                            isInWishlist: _isInWishlist),
                       ),
                       TextWidget(
-                        text: '\$0.99',
+                        text: '\$${usedPrice.toStringAsFixed(2)}',
                         color: color,
                         textSize: 18,
                         maxLines: 1,

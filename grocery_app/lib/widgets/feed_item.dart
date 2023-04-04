@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
-import 'package:grocery_app/services/global_methods.dart';
+import 'package:grocery_app/models/cart_model.dart';
+import 'package:grocery_app/provider/cart_provider.dart';
+import 'package:grocery_app/widgets/heat_btm.dart';
 import 'package:grocery_app/widgets/price_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 import 'package:provider/provider.dart';
-
 import '../models/products_model.dart';
-import '../provider/products_provider.dart';
+import '../provider/wishlist_provider.dart';
 
 class FeedWidget extends StatefulWidget {
   const FeedWidget({Key? key}) : super(key: key);
@@ -37,7 +38,11 @@ class _FeedWidgetState extends State<FeedWidget> {
   Widget build(BuildContext context) {
     Size size = Utils(context).getsize;
     final Color color = Utils(context).color;
-    final productsProviders = Provider.of<ProductModel>(context);
+    final productsModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart = cartProvider.getCardItems.containsKey(productsModel.id);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInWishlist = wishlistProvider.getWishlistItems.containsKey(productsModel.id);
 
     return Padding(
       padding: const EdgeInsets.all(6.0),
@@ -46,7 +51,8 @@ class _FeedWidgetState extends State<FeedWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, ProductDetails.routeName,arguments: productsProviders.id);
+            Navigator.pushNamed(context, ProductDetails.routeName,
+                arguments: productsModel.id);
             // GlobalMethod.navigateTo(
             //     ctx: context, routeName: ProductDetails.routeName);
           },
@@ -54,7 +60,7 @@ class _FeedWidgetState extends State<FeedWidget> {
           child: Column(
             children: [
               FancyShimmerImage(
-                imageUrl: productsProviders.imageUrl,
+                imageUrl: productsModel.imageUrl,
                 height: size.height * 0.12,
                 width: size.width * 0.14,
                 boxFit: BoxFit.contain,
@@ -67,7 +73,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                     Flexible(
                       flex: 3,
                       child: TextWidget(
-                        text: productsProviders.title,
+                        text: productsModel.title,
                         color: color,
                         maxLines: 1,
                         textSize: 18,
@@ -77,7 +83,10 @@ class _FeedWidgetState extends State<FeedWidget> {
                     Flexible(
                       child: GestureDetector(
                         onTap: () {},
-                        child: const Icon(IconlyLight.heart),
+                        child:  HeartBtn(
+                          productId: productsModel.id,
+                          isInWishlist: _isInWishlist,
+                        ),
                       ),
                     ),
                   ],
@@ -91,9 +100,9 @@ class _FeedWidgetState extends State<FeedWidget> {
                     Flexible(
                       flex: 2,
                       child: PriceWidget(
-                        isOnSale: productsProviders.isOnSale,
-                        price: productsProviders.price,
-                        salePrice: productsProviders.salePrice,
+                        isOnSale: productsModel.isOnSale,
+                        price: productsModel.price,
+                        salePrice: productsModel.salePrice,
                         textPrice: _quantityTextController.text,
                       ),
                     ),
@@ -108,8 +117,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                             flex: 4,
                             child: FittedBox(
                               child: TextWidget(
-                                text:
-                                    productsProviders.isPiece ? "Piece" : "KG",
+                                text: productsModel.isPiece ? "Piece" : "KG",
                                 color: color,
                                 textSize: 18,
                                 isTitle: true,
@@ -155,9 +163,16 @@ class _FeedWidgetState extends State<FeedWidget> {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: _isInCart
+                      ? null
+                      : () {
+                          cartProvider.addProductToCart(
+                              productId: productsModel.id,
+                              quantity:
+                                  int.parse(_quantityTextController.text));
+                        },
                   child: TextWidget(
-                    text: 'Add to cart',
+                    text: _isInCart ? "In Cart" : 'Add to cart',
                     maxLines: 1,
                     color: color,
                     textSize: 20,
