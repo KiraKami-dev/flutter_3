@@ -1,9 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
-import 'package:grocery_app/models/cart_model.dart';
 import 'package:grocery_app/provider/cart_provider.dart';
 import 'package:grocery_app/widgets/heat_btm.dart';
 import 'package:grocery_app/widgets/price_widget.dart';

@@ -9,8 +9,6 @@ import 'package:grocery_app/widgets/heat_btm.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:grocery_app/widgets/utils.dart';
 import 'package:provider/provider.dart';
-
-import '../models/products_model.dart';
 import '../provider/wishlist_provider.dart';
 
 class ProductDetails extends StatefulWidget {

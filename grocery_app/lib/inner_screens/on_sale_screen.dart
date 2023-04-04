@@ -7,7 +7,6 @@ import 'package:grocery_app/widgets/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../models/products_model.dart';
-import '../provider/cart_provider.dart';
 import '../provider/products_provider.dart';
 
 class OnSaleScreen extends StatelessWidget {
@@ -20,9 +19,6 @@ class OnSaleScreen extends StatelessWidget {
     Size size = Utils(context).getsize;
     final productsProviders = Provider.of<ProductsProvider>(context);
     List<ProductModel> productOnSale = productsProviders.getOnSaleProduct;
-    final productsModel = Provider.of<ProductModel>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
-    bool? _isInCart = cartProvider.getCardItems.containsKey(productsModel.id);
         
     return Scaffold(
       appBar: AppBar(
