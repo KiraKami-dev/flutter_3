@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/provider/cart_provider.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/category.dart';
 import 'package:grocery_app/screens/homepage.dart';
@@ -32,6 +33,8 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+
     bool _isDark = themeState.getDarkTheme;
     return Scaffold(
       // appBar: AppBar(title: Text(_pages[_selectedIndex]['title']),),
@@ -60,9 +63,13 @@ class _BottomBarState extends State<BottomBar> {
                 label: 'Category'),
             BottomNavigationBarItem(
                 icon: badges.Badge(
-                  showBadge: true,
-                    badgeContent: const Text("1",style: TextStyle(color: Colors.white),),                    
-                    badgeStyle: const badges.BadgeStyle(badgeColor: Colors.blue),
+                    showBadge: true,
+                    badgeContent: Text(
+                      cartProvider.getCardItems.length.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    badgeStyle:
+                        const badges.BadgeStyle(badgeColor: Colors.blue),
                     child: Icon(_selectedIndex == 2
                         ? IconlyBold.buy
                         : IconlyLight.buy)),

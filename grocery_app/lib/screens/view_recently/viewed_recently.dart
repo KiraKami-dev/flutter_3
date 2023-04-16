@@ -68,15 +68,16 @@ class _ViewedRecentlyScreenState extends State<ViewedRecentlyScreen> {
               Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
         ),
         body: ListView.builder(
-            itemCount: viewedlistItemsList.length,
-            itemBuilder: (ctx, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
-                child: ChangeNotifierProvider.value(
-                    value: viewedlistItemsList[index],
-                    child: ViewedRecentlyWidget()),
-              );
-            }),
+          itemCount: viewedlistItemsList.length,
+          itemBuilder: (ctx, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+              child: ChangeNotifierProvider.value(
+                  value: viewedlistItemsList[index],
+                  child: const ViewedRecentlyWidget()),
+            );
+          },
+        ),
       );
     }
   }
